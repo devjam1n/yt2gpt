@@ -10,6 +10,10 @@ module.exports = {
       floating: "floating 5s ease-in-out infinite",
     },
     extend: {
+      borderRadius: {
+        leftMessage: "0 10px 10px 10px",
+        rightMessage: "10px 0 10px 10px",
+      },
       colors: {
         bg: "#1D1F2A",
         lightBg: "#272C3A",

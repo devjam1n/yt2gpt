@@ -19,7 +19,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="z-10 mb-4 flex items-center justify-between">
+    <nav className="fixed left-4 right-4 mx-auto flex max-w-5xl items-center justify-between bg-bg pb-4 pt-4">
       <Link href="/" className="flex items-center gap-4">
         <Image src="/assets/images/logo.png" width={50} height={50} alt="Logo in navigation menu of a robot mascot." />
         <p className="hidden font-P2P text-base sm:block">YT-to-GPT</p>

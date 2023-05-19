@@ -1,16 +1,16 @@
 import ChatInterface from "@components/ChatInterface";
 
 export default async function Video({ params, searchParams }) {
-  const video_url = searchParams["url"];
+  const videoUrl = searchParams["url"];
 
   // Check if it's a valid YouTube URL
   const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
-  if (!youtubeRegex.test(video_url)) {
+  if (!youtubeRegex.test(videoUrl)) {
     throw new Error("No valid YouTube URL found...");
   }
 
   // fetch the video data via API routes
-  const response = await fetch("http://localhost:3000/api/video_data?url=" + video_url, { cache: "no-cache" });
+  const response = await fetch("http://localhost:3000/api/video_data?url=" + videoUrl, { cache: "no-cache" });
 
   // error handling
   if (response.status !== 200) {
@@ -27,8 +27,8 @@ export default async function Video({ params, searchParams }) {
   const { transscript, videoDetails } = json;
 
   return (
-    <div>
-      <ChatInterface video_url={video_url} transscript={transscript} videoDetails={videoDetails} />
-    </div>
+    <main className="w-full">
+      <ChatInterface videoUrl={videoUrl} transscript={transscript} videoDetails={videoDetails} />
+    </main>
   );
 }
