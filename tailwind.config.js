@@ -6,6 +6,9 @@ module.exports = {
       P2P: ["'Press Start 2P', cursive", "ui-sans-serif", "system-ui"],
       roboto: ["Roboto", "ui-sans-serif", "system-ui"],
     },
+    animation: {
+      floating: "floating 5s ease-in-out infinite",
+    },
     extend: {
       colors: {
         bg: "#1D1F2A",
@@ -14,6 +17,8 @@ module.exports = {
         text: "#ECF0EF",
         gray: "#82899B",
         primary: "#7369EA",
+        error: "#D95656",
+        warning: "#D6CD84",
       },
     },
   },

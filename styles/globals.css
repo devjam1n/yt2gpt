@@ -5,5 +5,22 @@
 @tailwind utilities;
 
 .btn {
-  @apply rounded-md px-8 py-2 transition-transform hover:scale-95;
+  @apply rounded-md px-8 py-3 transition-transform hover:scale-95;
+}
+
+.input {
+  @apply rounded-md bg-lightBg px-4 py-3 text-text focus:outline-none;
+}
+
+/* for the mascot floating */
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
