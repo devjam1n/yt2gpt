@@ -1,6 +1,4 @@
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import ChatInterface from "@components/ChatInterface";
 
 export default async function Video({ params, searchParams }) {
   const video_url = searchParams["url"];
@@ -11,7 +9,26 @@ export default async function Video({ params, searchParams }) {
     throw new Error("No valid YouTube URL found...");
   }
 
-  await sleep(10000);
+  // fetch the video data via API routes
+  const response = await fetch("http://localhost:3000/api/video_data?url=" + video_url, { cache: "no-cache" });
 
-  return <div>video</div>;
+  // error handling
+  if (response.status !== 200) {
+    if (response?.error) {
+      // from API route
+      throw new Error(response.error);
+    }
+    // other errors
+    throw new Error("Internal server error...");
+  }
+
+  // parse data
+  const json = await response.json();
+  const { transscript, videoDetails } = json;
+
+  return (
+    <div>
+      <ChatInterface video_url={video_url} transscript={transscript} videoDetails={videoDetails} />
+    </div>
+  );
 }
