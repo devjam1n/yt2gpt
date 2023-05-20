@@ -5,8 +5,10 @@ import Message from "./Message";
 import useChat from "@hooks/useChat";
 import { createRef, useEffect, useRef } from "react";
 import TagList from "./TagList";
+import { useSession } from "next-auth/react";
 
 export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
+  const { data: session, update } = useSession();
   const videoId = videoUrl.split("v=")[1];
   const messageRef = createRef();
 
@@ -24,6 +26,14 @@ export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
   const endOfMessagesRef = useRef(null);
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+    // when new message from system, remove token from session and update
+    if (messages[messages.length - 1]?.role === "system") {
+      if (session) {
+        session.user.tokens = session.user.tokens - 1;
+        update();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return (
