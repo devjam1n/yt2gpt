@@ -3,22 +3,24 @@
 import MessageContainer from "./MessageContainer";
 import Message from "./Message";
 import useChat from "@hooks/useChat";
-import { useState, createRef, useEffect, useRef } from "react";
+import { createRef, useEffect, useRef } from "react";
 import TagList from "./TagList";
 
 export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
   const videoId = videoUrl.split("v=")[1];
   const messageRef = createRef();
 
+  // add tag content to message input
   function handleTagClick(e) {
     e.preventDefault();
     messageRef.current.value = e.target.textContent;
     messageRef.current.focus();
   }
 
+  // useChat hook to handle chat logic
   const { handleSubmit, messages, isLoading } = useChat(transscript);
 
-  // scroll to bottom of messages when messages change
+  // scroll to bottom of messages when messages state change
   const endOfMessagesRef = useRef(null);
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -36,7 +38,6 @@ export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         ></iframe>
-
         {messages.map((message, index) => {
           return <Message key={index} text={message.content} right={message.role === "user"} />;
         })}
