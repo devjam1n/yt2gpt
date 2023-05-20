@@ -1,6 +1,6 @@
 export default function TagList({ handleTagClick }) {
   return (
-    <ul className="mb-1 flex gap-1">
+    <ul className="mb-1 flex gap-1 overflow-y-scroll">
       <li>
         <button onClick={handleTagClick} className="rounded-md bg-xLightBg px-3 py-2">
           Summarize this video

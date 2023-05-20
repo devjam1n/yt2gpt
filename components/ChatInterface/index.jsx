@@ -2,15 +2,13 @@
 
 import MessageContainer from "./MessageContainer";
 import Message from "./Message";
-import { useState, createRef } from "react";
+import useChat from "@hooks/useChat";
+import { useState, createRef, useEffect, useRef } from "react";
 import TagList from "./TagList";
 
 export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
   const videoId = videoUrl.split("v=")[1];
   const messageRef = createRef();
-
-  const [messages, setMessages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   function handleTagClick(e) {
     e.preventDefault();
@@ -18,33 +16,13 @@ export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
     messageRef.current.focus();
   }
 
-  async function handleSubmit(e) {
-    // Add users message to messages array
-    setMessages((prev) => [...prev, { role: "user", content: e.target.message.value }]);
-    setIsLoading(true);
+  const { handleSubmit, messages, isLoading } = useChat(transscript);
 
-    e.preventDefault();
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      body: JSON.stringify({
-        messages: messages ? [...messages, { role: "user", content: e.target.message.value }] : [{ role: "user", content: e.target.message.value }],
-        transscript: transscript,
-      }),
-    });
-
-    if (response.status !== 200) {
-      if (response?.error) {
-        // from API route
-        throw new Error(response.error);
-      }
-      throw new Error("Internal server error...");
-    }
-
-    const json = await response.json();
-
-    setMessages((prev) => [...prev, { role: "system", content: json }]);
-    setIsLoading(false);
-  }
+  // scroll to bottom of messages when messages change
+  const endOfMessagesRef = useRef(null);
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="mt-3 flex flex-col">
@@ -63,6 +41,7 @@ export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
           return <Message key={index} text={message.content} right={message.role === "user"} />;
         })}
         {isLoading && <li className={`max-w-[70%] self-start rounded-leftMessage bg-lightBg px-5 py-3 shadow-sm`}>Loading...</li>}
+        <div ref={endOfMessagesRef} />
       </MessageContainer>
       <div className="fixed bottom-0 left-0 right-0 mx-auto flex max-w-4xl flex-col bg-bg px-2 pb-3 pt-1">
         <TagList handleTagClick={handleTagClick} />

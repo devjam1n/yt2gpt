@@ -12,6 +12,9 @@ export async function POST(request) {
   const body = await request.json();
   const { transscript, messages } = body;
 
+  console.log(transscript);
+  console.log(messages);
+
   // create new messages
   const newMessages = messages.map((message) => {
     if (message.role === "system") {
@@ -24,7 +27,7 @@ export async function POST(request) {
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "system", content: "You act as a ChatBOT about this YouTube video. Peform any prompts user wants, in the scope of the video context." }, { role: "system", content: `Video transscript: ${transscript}` }, ...newMessages],
+      messages: [{ role: "system", content: `You are a knowledgeable assistant capable of understanding and responding to queries about a given YouTube video transcript: ${transscript}` }, ...newMessages],
     });
     return Response.json(completion.data.choices[0].message.content, { status: 200 });
   } catch (error) {
