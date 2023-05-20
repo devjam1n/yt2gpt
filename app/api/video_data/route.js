@@ -9,6 +9,7 @@ export async function GET(request) {
   // Fetch the initial video page and extract the INNERTUBE_KEY
   const response = await fetch(url);
   const videoPageBody = await response.text();
+
   const match = videoPageBody.match(innertube_regex);
   const INNERTUBE_KEY = match && match[1];
 
@@ -45,7 +46,7 @@ export async function GET(request) {
 
   // Extract the video data from the response
   const videoDetails = {
-    title: "title should be here, but it is not",
+    title: "This would be the title of the video...",
   };
 
   return Response.json({ transscript, videoDetails }, { status: 200 });

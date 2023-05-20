@@ -19,7 +19,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="fixed left-4 right-4 mx-auto flex max-w-5xl items-center justify-between bg-bg pb-4 pt-4">
+    <nav className="fixed left-4 right-4 z-10 mx-auto flex max-w-5xl items-center justify-between bg-bg pb-4 pt-4">
       <Link href="/" className="flex items-center gap-4">
         <Image src="/assets/images/logo.png" width={50} height={50} alt="Logo in navigation menu of a robot mascot." />
         <p className="hidden font-P2P text-base sm:block">YT-to-GPT</p>
@@ -29,7 +29,7 @@ export default function Nav() {
           <p>Tokens: {session?.user.tokens}</p>
           <Image onClick={() => setIsDropdownOpen((prev) => !prev)} className="cursor-pointer overflow-hidden rounded-full" src={session?.user.image} width={40} height={40} alt="Logo in navigation menu of a robot mascot." />
           {isDropdownOpen && (
-            <div className="absolute right-0 top-14 min-w-[220px] rounded-lg bg-lightBg p-4 shadow-md">
+            <div className="absolute right-0 top-14 z-10 min-w-[220px] rounded-lg bg-lightBg p-4 shadow-md">
               <p className="mb-3">Hello, {session?.user.name}</p>
               <p className="mb-8">
                 Next token refill:
