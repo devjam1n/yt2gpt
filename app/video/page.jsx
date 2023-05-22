@@ -10,7 +10,7 @@ export default async function Video({ params, searchParams }) {
   }
 
   // fetch the video data via API routes
-  const response = await fetch("http://localhost:3000/api/video_data?url=" + videoUrl, { cache: "no-cache" });
+  const response = await fetch(`${process.env.URL}/api/video_data?url=${videoUrl}`, { cache: "no-cache" });
 
   // error handling
   if (response.status !== 200) {
