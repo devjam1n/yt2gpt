@@ -17,7 +17,7 @@ export async function POST(request) {
 
   // if not signed in, return error
   if (!session) {
-    return Response.json({ error: "You must be signed in to use this API" });
+    return Response.json({ error: "You must be signed in to use this endpoint" }, { status: 401 });
   }
 
   // get user profile
@@ -26,7 +26,7 @@ export async function POST(request) {
 
   // if user has no tokens, return error
   if (userAccount.tokens === 0) {
-    return Response.json({ error: "You have no tokens left" });
+    return Response.json({ error: "You have no tokens left" }, { status: 401 });
   }
 
   const body = await request.json();
@@ -52,10 +52,10 @@ export async function POST(request) {
 
     return Response.json(completion.data.choices[0].message.content, { status: 200 });
   } catch (error) {
-    if (error.response) {
-      return Response.json({ error: error?.response?.status });
+    if (error?.response) {
+      return Response.json({ error: error?.response?.status }, { status: error?.response?.status });
     } else {
-      return Response.json({ error: error?.response?.status });
+      return Response.json({ error: "Internal server error" }, { status: 500 });
     }
   }
 }

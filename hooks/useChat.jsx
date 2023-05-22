@@ -1,39 +1,49 @@
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 
 export default function useChat(transscript) {
   const [messages, setMessages] = useState([]);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     const messageContent = e.target.message.value;
 
     // Add user's message to messages array
     setMessages((prev) => [...prev, { role: "user", content: messageContent }]);
     e.target.message.value = "";
-    setIsLoading(true);
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      body: JSON.stringify({
-        messages: [...messages, { role: "user", content: messageContent }],
-        transscript: transscript,
-      }),
-    });
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        body: JSON.stringify({
+          messages: [...messages, { role: "user", content: messageContent }],
+          transscript: transscript,
+        }),
+      });
 
-    if (response.status !== 200) {
-      const data = await response.json();
-      const message = data?.error ? data.error : "Internal server error...";
-      throw new Error(message);
+      const json = await response.json();
+
+      // error handling
+      if (response.status !== 200) {
+        // if error from API route
+        if (json?.error) {
+          throw new Error(json?.error);
+        }
+        // other errors
+        throw new Error("Internal server error...");
+      }
+
+      setMessages((prev) => [...prev, { role: "system", content: json }]);
+    } catch (error) {
+      console.error("Error occurred in useChat:", error);
+      setError(error);
+    } finally {
+      setIsLoading(false);
     }
-
-    const json = await response.json();
-
-    setMessages((prev) => [...prev, { role: "system", content: json }]);
-    setIsLoading(false);
   };
 
-  return { handleSubmit, messages, isLoading };
+  return { handleSubmit, messages, isLoading, error };
 }

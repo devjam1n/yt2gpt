@@ -16,7 +16,7 @@ export default async function Video({ params, searchParams }) {
   if (response.status !== 200) {
     if (response?.error) {
       // from API route
-      throw new Error(response.error);
+      throw new Error(response?.error);
     }
     // other errors
     throw new Error("Internal server error...");
