@@ -11,6 +11,12 @@ export default function useChat(transscript) {
     setIsLoading(true);
     const messageContent = e.target.message.value;
 
+    if (!messageContent) {
+      setError("Message cannot be empty");
+      setIsLoading(false);
+      return;
+    }
+
     // Add user's message to messages array
     setMessages((prev) => [...prev, { role: "user", content: messageContent }]);
     e.target.message.value = "";

@@ -2,6 +2,7 @@
 
 import MessageContainer from "./MessageContainer";
 import Message from "./Message";
+import { ThreeDots } from "react-loader-spinner";
 import useChat from "@hooks/useChat";
 import { createRef, useEffect, useRef } from "react";
 import TagList from "./TagList";
@@ -59,7 +60,11 @@ export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
           {messages?.map((message, index) => {
             return <Message key={index} text={message?.content} right={message?.role === "user"} />;
           })}
-          {isLoading && <li className={`max-w-[70%] self-start rounded-leftMessage bg-lightBg px-5 py-3 shadow-sm`}>Loading...</li>}
+          {isLoading && (
+            <li className={`max-w-[70%] self-start rounded-leftMessage bg-lightBg px-5 py-2 shadow-sm`}>
+              <ThreeDots height="30" width="60" radius="7" color="#7369EA" ariaLabel="three-dots-loading" wrapperStyle={{}} wrapperClassName="" visible={true} />
+            </li>
+          )}
           <div ref={endOfMessagesRef} />
         </MessageContainer>
         <div className="fixed bottom-0 left-0 right-0 mx-auto flex max-w-4xl flex-col bg-bg px-2 pb-3 pt-1">
