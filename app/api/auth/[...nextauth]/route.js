@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import refreshTokens from "@utils/refreshTokens";
 
 import User from "@models/user";
 import { connectToDB } from "@utils/database";
@@ -46,10 +47,15 @@ const handler = NextAuth({
             email: profile.email,
             username: username,
             image: profile.picture,
-            tokens: 3,
+            tokens: process.env.START_TOKEN_AMOUNT, // .env to select starting token amount
             tokensRefill: new Date(new Date().valueOf() + 1000 * 60 * 60 * 24), // 24 hours from now
             createdAt: new Date(),
           });
+        }
+
+        // if user exists, maybe refresh their tokens
+        if (userExists) {
+          await refreshTokens(userExists);
         }
 
         return true;

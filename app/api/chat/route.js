@@ -2,6 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { getServerSession } from "next-auth/next";
 import { connectToDB } from "@utils/database";
 import User from "@models/user";
+import refreshTokens from "@utils/refreshTokens";
 
 // Create a new Configuration object with the API key passed in as an environment variable
 const configuration = new Configuration({
@@ -22,7 +23,9 @@ export async function POST(request) {
 
   // get user profile
   await connectToDB();
-  const userAccount = await User.findOne({ email: session.user.email });
+  let userAccount = await User.findOne({ email: session.user.email });
+
+  userAccount = await refreshTokens(userAccount); // refresh tokens
 
   // if user has no tokens, return error
   if (userAccount.tokens === 0) {

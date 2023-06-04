@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import Countdown from "./Countdown";
 
 export default function Nav() {
   const { data: session } = useSession();
@@ -29,12 +30,10 @@ export default function Nav() {
           <p>Tokens: {session?.user.tokens}</p>
           <Image onClick={() => setIsDropdownOpen((prev) => !prev)} className="cursor-pointer overflow-hidden rounded-full" src={session?.user.image} width={40} height={40} alt="Logo in navigation menu of a robot mascot." />
           {isDropdownOpen && (
-            <div className="absolute right-0 top-14 z-10 min-w-[220px] rounded-lg bg-lightBg p-4 shadow-md">
+            <div className="absolute right-0 top-14 z-10 min-w-[250px] rounded-lg bg-lightBg p-4 shadow-md">
               <p className="mb-3">Hello, {session?.user.name}</p>
               <p className="mb-8">
-                Next token refill:
-                <br />
-                {new Date(session?.user.tokensRefill).toLocaleString()}
+                Tokens refill in <Countdown targetDate={new Date(session?.user.tokensRefill)} />
               </p>
               <button onClick={signOut} className="btn w-full bg-bg">
                 Sign out
