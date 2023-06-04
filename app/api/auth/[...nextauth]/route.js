@@ -30,9 +30,21 @@ const handler = NextAuth({
 
         // if not, create a new document and save user in MongoDB
         if (!userExists) {
+          let username = profile.name.replace(" ", "").toLowerCase();
+
+          // if username is shorter than 8 characters, pad it with "user".
+          if (username.length < 8) {
+            username = username.padEnd(8, "_user");
+          }
+
+          // if username is longer than 20 characters, truncate it.
+          if (username.length > 20) {
+            username = username.substring(0, 20);
+          }
+
           await User.create({
             email: profile.email,
-            username: profile.name.replace(" ", "").toLowerCase(),
+            username: username,
             image: profile.picture,
             tokens: 3,
             tokensRefill: new Date(new Date().valueOf() + 1000 * 60 * 60 * 24), // 24 hours from now
