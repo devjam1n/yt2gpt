@@ -1,3 +1,4 @@
+import { get_encoding } from "@dqbd/tiktoken";
 import generateRequest from "./generateRequest";
 
 const innertube_regex = /"INNERTUBE_API_KEY":"([^"]+)"/;
@@ -26,7 +27,7 @@ export async function GET(request) {
 
   // transscripts is disabled, return
   if (!body.actions) {
-    return new Response.json({ error: "Transcript is disabled on this video..." }, { status: 404 });
+    return Response.json({ error: "Transcript is disabled on this video..." }, { status: 404 });
   }
 
   // Extract the transcript data from the response
@@ -43,6 +44,17 @@ export async function GET(request) {
   // Create a new array of just the transcript text
   const transcriptTexts = transcriptsData.map((transcript) => transcript.text);
   const transscript = transcriptTexts.join(" ");
+
+  // encode the transscript to get token amount
+  const enc = get_encoding("cl100k_base");
+  const tokens = enc.encode(transscript);
+  const maxTokens = 3096;
+  // token count is too long throw error
+  console.log("token length: " + tokens.length);
+  if (tokens.length > maxTokens) {
+    const excessPercent = ((tokens.length - maxTokens) / maxTokens) * 100;
+    return Response.json({ error: `Video is too long by ${excessPercent.toFixed(2)}%.` }, { status: 422 });
+  }
 
   // Extract the video data from the response
   const videoDetails = {

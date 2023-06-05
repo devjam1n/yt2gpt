@@ -14,12 +14,12 @@ export default async function Video({ params, searchParams }) {
 
   // error handling
   if (response.status !== 200) {
-    if (response?.error) {
-      // from API route
-      throw new Error(response?.error);
+    const json = await response.json();
+    if (json?.error) {
+      throw new Error(json?.error);
+    } else {
+      throw new Error("Internal server error...");
     }
-    // other errors
-    throw new Error("Internal server error...");
   }
 
   // parse data
