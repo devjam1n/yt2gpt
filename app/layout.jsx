@@ -1,6 +1,7 @@
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import "@styles/globals.css";
+import Script from "next/script";
 
 export const metadata = {
   title: "YT-to-GPT",
@@ -10,6 +11,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-R6T9M5TZ70');
+        `}
+      </Script>
       <body className="bg-bg">
         <div className="relative mx-auto flex w-full max-w-6xl flex-col overflow-hidden text-text">
           <Provider>
