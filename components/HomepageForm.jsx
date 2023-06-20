@@ -28,7 +28,10 @@ export default function HomepageForm() {
       return;
     }
 
-    router.push(`/video/?url=${url}`);
+    // extract the video id
+    const videoId = url.split("v=")[1];
+
+    router.push(`/video/${videoId}`); // push to the video page
   }
 
   return (

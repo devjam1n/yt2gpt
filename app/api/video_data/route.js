@@ -5,7 +5,14 @@ const innertube_regex = /"INNERTUBE_API_KEY":"([^"]+)"/;
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const url = searchParams.get("url");
+  const videoId = searchParams.get("id");
+
+  const youtubeRegex = /^[a-zA-Z0-9_-]{11}$/;
+  if (!youtubeRegex.test(videoId)) {
+    throw new Error("No valid YouTube ID found...");
+  }
+
+  const url = `https://www.youtube.com/watch?v=${videoId}`;
 
   // Fetch the initial video page and extract the INNERTUBE_KEY
   const response = await fetch(url);
