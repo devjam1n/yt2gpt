@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import getYouTubeVideoID from "@utils/getYouTubeVideoID";
 
 export default function HomepageForm() {
   const { data: session } = useSession();
@@ -28,13 +29,7 @@ export default function HomepageForm() {
       return;
     }
 
-    // extract the video id
-    let videoId = url.split("v=")[1];
-
-    // if there's a & in the URL, remove it
-    if (videoId.includes("&")) {
-      videoId = videoId.split("&")[0];
-    }
+    const videoId = getYouTubeVideoID(url);
 
     router.push(`/video/${videoId}`); // push to the video page
   }
