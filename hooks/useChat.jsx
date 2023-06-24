@@ -11,7 +11,7 @@ export default function useChat(transscript) {
     setIsLoading(true);
     const messageContent = e.target.message.value;
 
-    if (!messageContent) {
+    if (messageContent.length < 1) {
       setError("Message cannot be empty");
       setIsLoading(false);
       return;
@@ -45,7 +45,7 @@ export default function useChat(transscript) {
       setMessages((prev) => [...prev, { role: "system", content: json }]);
     } catch (error) {
       console.error("Error occurred in useChat:", error);
-      setError(error);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }

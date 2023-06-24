@@ -8,10 +8,12 @@ export default function Countdown({ targetDate }) {
     const now = new Date().getTime();
     const diff = targetDate.getTime() - now;
 
-    if (diff > 3600000) {
-      return Math.round(diff / 3600000) + " hours";
+    if (diff <= 0) {
+      return "now";
+    } else if (diff > 3600000) {
+      return `in ${Math.round(diff / 3600000)} hours`;
     } else {
-      return Math.round(diff / 60000) + " minutes";
+      return `in ${Math.round(diff / 60000)} minutes`;
     }
   }
 

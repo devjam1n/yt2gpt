@@ -33,7 +33,7 @@ export default function Nav() {
             <div className="absolute right-0 top-14 z-10 min-w-[250px] rounded-lg bg-lightBg p-4 shadow-md">
               <p className="mb-3">Hello, {session?.user.name}</p>
               <p className="mb-8">
-                Tokens refill in <Countdown targetDate={new Date(session?.user.tokensRefill)} />
+                Tokens refill <Countdown targetDate={new Date(session?.user.tokensRefill)} />
               </p>
               <button onClick={signOut} className="btn w-full bg-bg">
                 Sign out

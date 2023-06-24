@@ -22,12 +22,6 @@ export default function ChatInterface({ videoId, transscript, videoDetails }) {
   // useChat hook to handle chat logic
   const { handleSubmit, messages, isLoading, error } = useChat(transscript);
 
-  // throw error when error from useChat hook, can come anytime
-  useEffect(() => {
-    if (!error) return;
-    throw new Error(error);
-  }, [error]);
-
   // scroll to bottom of messages when messages state change
   const endOfMessagesRef = useRef(null);
   useEffect(() => {
@@ -64,6 +58,7 @@ export default function ChatInterface({ videoId, transscript, videoDetails }) {
               <ThreeDots height="30" width="60" radius="7" color="#7369EA" ariaLabel="three-dots-loading" wrapperStyle={{}} wrapperClassName="" visible={true} />
             </li>
           )}
+          {error && <Message text={error} right={false} />}
           <div ref={endOfMessagesRef} />
         </MessageContainer>
         <div className="fixed bottom-0 left-0 right-0 mx-auto flex max-w-4xl flex-col bg-bg px-2 pb-3 pt-1">
