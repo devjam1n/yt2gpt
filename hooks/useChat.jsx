@@ -17,6 +17,12 @@ export default function useChat(transscript) {
       return;
     }
 
+    if (messageContent.length > 100) {
+      setError("Message cannot be longer than 100 characters");
+      setIsLoading(false);
+      return;
+    }
+
     // Add user's message to messages array
     setMessages((prev) => [...prev, { role: "user", content: messageContent }]);
     e.target.message.value = "";
