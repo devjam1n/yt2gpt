@@ -29,7 +29,12 @@ export default function HomepageForm() {
     }
 
     // extract the video id
-    const videoId = url.split("v=")[1];
+    let videoId = url.split("v=")[1];
+
+    // if there's a & in the URL, remove it
+    if (videoId.includes("&")) {
+      videoId = videoId.split("&")[0];
+    }
 
     router.push(`/video/${videoId}`); // push to the video page
   }
