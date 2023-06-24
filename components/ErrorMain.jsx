@@ -4,7 +4,7 @@ import Mascot from "@components/Mascot";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Error({ error, reset }) {
+export default function ErrorMain({ error }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -15,10 +15,10 @@ export default function Error({ error, reset }) {
   return (
     <main className="mt-[130px] flex flex-col items-center gap-7">
       <Mascot />
-      <h1 className="font-P2P text-2xl">Error :(</h1>
-      <p>Internal server error</p>
+      <h1 className="font-P2P text-2xl">Sorry :/</h1>
+      <p>{error}</p>
       <button className="btn bg-primary" onClick={() => router.push("/")}>
-        Try again
+        Try another video
       </button>
     </main>
   );

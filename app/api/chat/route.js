@@ -28,7 +28,7 @@ export async function POST(request) {
   userAccount = await refreshTokens(userAccount); // refresh tokens
 
   // if user has no tokens, return error
-  if (userAccount.tokens === 0) {
+  if (userAccount?.tokens === 0) {
     return Response.json({ error: "You have no tokens left" }, { status: 401 });
   }
 

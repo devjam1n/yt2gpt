@@ -8,9 +8,8 @@ import { createRef, useEffect, useRef } from "react";
 import TagList from "./TagList";
 import { useSession } from "next-auth/react";
 
-export default function ChatInterface({ videoUrl, transscript, videoDetails }) {
+export default function ChatInterface({ videoId, transscript, videoDetails }) {
   const { data: session, update } = useSession();
-  const videoId = videoUrl.split("v=")[1];
   const messageRef = createRef();
 
   // add tag content to message input

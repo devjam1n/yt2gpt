@@ -9,7 +9,7 @@ export async function GET(request) {
 
   const youtubeRegex = /^[a-zA-Z0-9_-]{11}$/;
   if (!youtubeRegex.test(videoId)) {
-    throw new Error("No valid YouTube ID found...");
+    return Response.json({ error: "No valid video ID found" }, { status: 404 });
   }
 
   const url = `https://www.youtube.com/watch?v=${videoId}`;
