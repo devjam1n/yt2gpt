@@ -46,7 +46,7 @@ export async function POST(request) {
 
   try {
     const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo-16k",
       messages: [{ role: "system", content: `You are a knowledgeable assistant capable of understanding and responding to queries about a given YouTube video transcript: ${transscript}` }, ...newMessages],
     });
 

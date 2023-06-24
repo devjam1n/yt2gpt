@@ -55,7 +55,7 @@ export async function GET(request) {
   // encode the transscript to get token amount
   const enc = get_encoding("cl100k_base");
   const tokens = enc.encode(transscript);
-  const maxTokens = 3096;
+  const maxTokens = 10000;
   // token count is too long throw error
   console.log("token length: " + tokens.length);
   if (tokens.length > maxTokens) {
