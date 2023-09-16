@@ -1,26 +1,18 @@
+// Tag list displaying suggestions for prompts at chat interface
 export default function TagList({ handleTagClick }) {
-  return (
-    <ul className="flex gap-2 overflow-y-scroll pb-2">
-      <li>
-        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2">
-          Summarize video
-        </button>
-      </li>
-      <li>
-        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2">
-          Main talking points
-        </button>
-      </li>
-      <li>
-        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2">
-          Fact check...
-        </button>
-      </li>
-      <li>
-        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2">
-          Audience for this video
-        </button>
-      </li>
-    </ul>
-  );
+    const options = ["Summarize video", "Main talking points", "Fact check ", "Audience for this video"];
+
+    return (
+        <ul className="flex gap-1 overflow-y-scroll pb-1">
+            {options.map((option, index) => {
+                return (
+                    <li key={index}>
+                        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2 text-sm">
+                            {option}
+                        </button>
+                    </li>
+                );
+            })}
+        </ul>
+    );
 }
