@@ -1,46 +1,60 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import getYouTubeVideoID from "@utils/getYouTubeVideoID";
 
 export default function HomepageForm() {
-  const { data: session } = useSession();
-  const router = useRouter();
+    const { data: session } = useSession();
+    const router = useRouter();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const url = e.target[0].value;
+    const [videoURL, setVideoURL] = useState(""); // The video URL input
+    const [error, setError] = useState("");
 
-    if (!session?.user) {
-      router.push(`/?error=Please sign in before continuing`);
-      return;
+    // Handle input of video URL and redirect to the video page
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        // If user is not signed in, redirect to sign in page
+        if (!session?.user) {
+            router.push("/login");
+            return;
+        }
+
+        if (videoURL === "") {
+            setError("Enter a video URL");
+            return;
+        }
+
+        // Check if it's a valid YouTube URL
+        const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+        if (!youtubeRegex.test(videoURL)) {
+            setError("Invalid video URL");
+            return;
+        }
+
+        // Get the video ID from our utility function
+        const videoId = getYouTubeVideoID(videoURL);
+
+        router.push(`/video/${videoId}`); // Navigate to video page
     }
 
-    if (!url) {
-      router.push(`/?error=Please enter a URL`);
-      return;
-    }
+    // Clear error message when videoURL changes
+    useEffect(() => {
+        setError("");
+    }, [videoURL]);
 
-    // Check if it's a valid YouTube URL
-    const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
-    if (!youtubeRegex.test(url)) {
-      router.push(`/?error=Please enter a valid YouTube URL`);
-      return;
-    }
-
-    const videoId = getYouTubeVideoID(url);
-
-    router.push(`/video/${videoId}`); // push to the video page
-  }
-
-  return (
-    <>
-      {!session?.user && <p className="mb-4 text-error">Please sign in before continuing.</p>}
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <input type="text" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" className="input mb-1 w-full" />
-        <button className="btn ml-auto bg-primary">Continue</button>
-      </form>
-    </>
-  );
+    return (
+        <>
+            {!session?.user && <p className="mb-4 text-error">Please sign in before continuing.</p>}
+            <form onSubmit={handleSubmit} className="flex flex-col">
+                <input value={videoURL} onChange={(e) => setVideoURL(e.target.value)} type="text" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" className="input mb-1 w-full" />
+                <div className="flex gap-4">
+                    <p className="ml-auto self-center text-error">{error}</p>
+                    <button className="btn bg-primary">Continue</button>
+                </div>
+            </form>
+        </>
+    );
 }
