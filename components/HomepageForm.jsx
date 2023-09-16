@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import getYouTubeVideoID from "@utils/getYouTubeVideoID";
 
+/*  Is the form on the homepage with video input and continue button,
+    validates and redirects to video page with ID param on submit */
 export default function HomepageForm() {
     const { data: session } = useSession();
     const router = useRouter();
