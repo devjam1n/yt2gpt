@@ -53,7 +53,7 @@ export default function ChatInterface({ videoId, transscript, videoDetails }) {
                     {error && <Message text={error} right={false} />}
                     <div ref={endOfMessagesRef} />
                 </MessageContainer>
-                <div className="fixed bottom-0 left-0 right-0 mx-auto flex max-w-4xl flex-col px-2 pb-2">
+                <div className="fixed bottom-0 left-0 right-0 mx-auto flex max-w-6xl flex-col px-2 pb-2">
                     {messages.length === 0 && <TagList handleTagClick={handleTagClick} />}
                     <form className="flex h-[70px] w-full gap-1" onSubmit={handleSubmit}>
                         <textarea ref={messageRef} id="message" name="message" type="text" placeholder="Write your prompt here..." className="input w-full resize-none" />

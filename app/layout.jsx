@@ -22,10 +22,10 @@ export default function RootLayout({ children }) {
           `}
             </Script>
             <body className="bg-bg">
-                <div className="relative mx-auto flex w-full max-w-6xl flex-col overflow-hidden text-text">
+                <div className="relative mx-auto flex w-full max-w-7xl flex-col overflow-hidden text-text">
                     <Provider>
                         <Nav />
-                        <div className="mx-auto mt-[70px] w-full max-w-4xl px-4">{children}</div>
+                        <div className="mx-auto mt-[70px] w-full max-w-6xl px-4">{children}</div>
                     </Provider>
                 </div>
             </body>

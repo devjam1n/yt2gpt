@@ -53,7 +53,7 @@ export default function HomepageForm() {
             <form onSubmit={handleSubmit} className="flex flex-col">
                 <input value={videoURL} onChange={(e) => setVideoURL(e.target.value)} type="text" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" className="input mb-1 w-full" />
                 <div className="flex gap-4">
-                    <p className="ml-auto self-center text-error">{error}</p>
+                    <p className="ml-auto self-center text-sm text-error md:text-base">{error}</p>
                     <button className="btn bg-primary">Continue</button>
                 </div>
             </form>

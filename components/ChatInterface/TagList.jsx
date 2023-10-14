@@ -7,7 +7,7 @@ export default function TagList({ handleTagClick }) {
             {options.map((option, index) => {
                 return (
                     <li key={index}>
-                        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2 text-sm">
+                        <button onClick={handleTagClick} className="truncate text-ellipsis rounded-md bg-xLightBg px-3 py-2 text-sm sm:text-base">
                             {option}
                         </button>
                     </li>

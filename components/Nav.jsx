@@ -19,7 +19,7 @@ export default function Nav() {
 
     return (
         pathname !== "/login" && (
-            <nav className="fixed left-4 right-4 z-10 mx-auto flex max-w-5xl items-center justify-between bg-bg pb-4 pt-4">
+            <nav className="fixed left-4 right-4 z-10 mx-auto flex max-w-7xl items-center justify-between bg-bg pb-4 pt-4">
                 {/* Main logo */}
                 <Link href="/" className="flex items-center gap-4">
                     <Image src="/assets/images/logo.png" width={50} height={50} alt="Logo in navigation menu of a robot mascot." />
