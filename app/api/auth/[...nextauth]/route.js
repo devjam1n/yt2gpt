@@ -27,10 +27,10 @@ const handler = NextAuth({
                 await connectToDB();
 
                 // check if user already exists
-                const userExists = await User.findOne({ email: profile.email });
+                const user = await User.findOne({ email: profile.email });
 
                 // if not, create a new document and save user in MongoDB
-                if (!userExists) {
+                if (!user) {
                     let username = profile.name.replace(" ", "").toLowerCase();
 
                     // if username is shorter than 8 characters, pad it with "user".
@@ -54,8 +54,8 @@ const handler = NextAuth({
                 }
 
                 // if user exists, maybe refresh their tokens
-                if (userExists) {
-                    await refreshTokens(userExists);
+                if (user) {
+                    await refreshTokens(user);
                 }
 
                 return true;
@@ -63,6 +63,9 @@ const handler = NextAuth({
                 console.log(error.message);
                 return false;
             }
+        },
+        redirect: async ({ url, baseUrl }) => {
+            return baseUrl; // redirect to homepage after succesfull login
         },
     },
 });
