@@ -28,8 +28,8 @@ export default function Nav() {
                     </Link>
                     <ul className="flex gap-1">
                         <li>
-                            <a href="/about" className="inline-block rounded-md px-4 py-2 hover:bg-lightBg">
-                                About
+                            <a href="/discover" className="inline-block rounded-md px-4 py-2 hover:bg-lightBg">
+                                Discover
                             </a>
                         </li>
                         <li>
