@@ -20,11 +20,25 @@ export default function Nav() {
     return (
         pathname !== "/login" && (
             <nav className="fixed left-4 right-4 z-10 mx-auto flex max-w-7xl items-center justify-between bg-bg pb-4 pt-4">
-                {/* Main logo */}
-                <Link href="/" className="flex items-center gap-4">
-                    <Image src="/assets/images/logo.png" width={50} height={50} alt="Logo in navigation menu of a robot mascot." />
-                    <p className="hidden font-P2P text-base sm:block">YT2GPT</p>
-                </Link>
+                <div className="flex items-center gap-8">
+                    {/* Main logo */}
+                    <Link href="/" className="flex items-center gap-4">
+                        <Image src="/assets/images/logo.png" width={50} height={50} alt="Logo in navigation menu of a robot mascot." />
+                        <p className="hidden font-P2P text-base sm:block">YT2GPT</p>
+                    </Link>
+                    <ul className="flex gap-1">
+                        <li>
+                            <a href="/about" className="inline-block rounded-md px-4 py-2 hover:bg-lightBg">
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/privacy" className="inline-block rounded-md px-4 py-2 hover:bg-lightBg">
+                                Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 {/* If signed in display user icon and menu */}
                 {session?.user ? (
                     <div className="relative flex items-center gap-4">
